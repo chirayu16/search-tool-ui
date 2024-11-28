@@ -8,116 +8,149 @@
                 <SearchBar @search="handleSearch" />
                 <ThemeToggle />
             </div>
-            
         </div>
-      <SkeletonLoader v-if="isLoading" />
-      <SearchList :movies="movies" @selectMovie="onMovieSelect" />
-    <div
-    v-if="selectedMovie"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    >
-    <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative"
-      >
-      <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
-        {{ selectedMovie.Title }}
-      </h2>
-      <img
-        :src="selectedMovie.Poster"
-        alt="Selected Movie"
-        class="w-full h-48 object-cover rounded my-4"
-      />
-      <p class="text-gray-600 dark:text-gray-300">{{ selectedMovie.Plot }}</p>
-      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-        <strong>Year:</strong> {{ selectedMovie.Year }}
-      </p>
-      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-        <strong>Genre:</strong> {{ selectedMovie.Genre }}
-      </p>
-      <button
-        @click="closeModal"
-        class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
-      >
-        ✖
-      </button>
+        
+        <SkeletonLoader v-if="isLoading" />
+        <div v-if="noResults" class="mt-4 text-center">
+        <div class="p-6">
+            <div class="flex justify-center items-center mb-4">
+      </div>
+      <p class="text-xl font-semibold">No movies found for your search query.</p>
     </div>
   </div>
+        <SearchList 
+            :movies="movies" 
+            @selectMovie="onMovieSelect" 
+        />
+        
+        <SpinnerLoader 
+            v-if="isLoadingMore" 
+        />
+        
+        <MovieModal 
+            v-if="selectedMovie || isModalLoading" 
+            :movie="selectedMovie" 
+            :is-loading="isModalLoading" 
+            @close="closeModal" 
+        />
     </div>
-  </template>
+</template>
   
-  <script setup>
-  import { ref } from "vue";
-  import SearchBar from "./SearchBar.vue";
-  import SearchList from "./SearchList.vue";
-  import ThemeToggle from "./ThemeToggle.vue";
-  import SkeletonLoader from "./SkeletonLoader.vue";
-  import Logo from "./Logo.vue";
-  import axios from "axios";
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+import SearchBar from "./SearchBar.vue";
+import SearchList from "./SearchList.vue";
+import MovieModal from "./MovieModal.vue";
+import ThemeToggle from "./ThemeToggle.vue";
+import SkeletonLoader from "./SkeletonLoader.vue";
+import SpinnerLoader from "./SpinnerLoader.vue";
+import Logo from "./Logo.vue";
+import axios from "axios";
+import { debounce } from 'lodash-es';
   
-  const movies = ref([]);
-  const selectedMovie = ref(null);
-  const apikey = import.meta.env.VITE_API_KEY
-  const isLoading = ref(false);
+const movies = ref([]);
+const selectedMovie = ref(null);
+const apikey = import.meta.env.VITE_API_KEY;
+const isLoading = ref(false);
+const isLoadingMore = ref(false);
+const isModalLoading = ref(false);
+const query = ref('');
+const page = ref(1);
+const hasMore = ref(true);
+const noResults = ref(false);
+    
+const fetchMovies = async (searchQuery, currentPage = 1) => {
+    if (!hasMore.value) return;
 
+    const loadingRef = currentPage === 1 ? isLoading : isLoadingMore;
+    loadingRef.value = true;
+    noResults.value = false; 
 
-  let debounceTimeout;
-  const debounce = (func, delay) => {
-    return (...args) => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  };
-  
-  const fetchMovies = async (query) => {
-    isLoading.value = true;
     try {
-      const response = await axios.get(`http://www.omdbapi.com`, {
-        params: {
-          apikey,
-          s: query,
-        },
-      });
-      movies.value = response.data.Search || [];
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-    finally {
-    isLoading.value = false;
-  }
-  };
-  
-  const handleSearch = debounce((query) => {
-    if (query.trim()) {
-      fetchMovies(query);
-    }
-  }, 300);
-  
+        const response = await axios.get('http://www.omdbapi.com', {
+            params: {
+                apikey,
+                s: searchQuery,
+                page: currentPage
+            },
+        });
 
-  const onMovieSelect = async (movieId) => {
-    try {
-      const response = await axios.get(`http://www.omdbapi.com`, {
-        params: {
-          apikey,
-          i: movieId,
-        },
-      });
-      selectedMovie.value = response.data;
+        const newMovies = response.data.Search || [];
+    
+        if (currentPage === 1) {
+            movies.value = newMovies;
+        } else {
+            movies.value = [...movies.value, ...newMovies];
+        }
+
+        hasMore.value = newMovies.length > 0;
+
+        if (currentPage === 1 && newMovies.length === 0) {
+            noResults.value = true;
+        }
+        else {
+            noResults.value = false; 
+        }
     } catch (error) {
-      console.error("Error fetching movie details:", error);
+        console.error("Error fetching movies:", error);
+    } finally {
+        loadingRef.value = false;
+
     }
-  };
-  
-  const selectMovie = (movie) => {
-  selectedMovie.value = movie;
 };
+  
+const handleSearch = debounce((searchQuery) => {
+    if (searchQuery.trim()) {
+        query.value = searchQuery;
+        page.value = 1;
+        hasMore.value = true;
+        fetchMovies(searchQuery);
+    }
+}, 300);
+
+const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+  
+    if (scrollTop + clientHeight >= scrollHeight - 100 && 
+        !isLoading.value && 
+        !isLoadingMore.value && 
+        hasMore.value) {
+        page.value++;
+        fetchMovies(query.value, page.value);
+    }
+};
+  
+const onMovieSelect = async (movieId) => {
+    isModalLoading.value = true;
+    try {
+        const response = await axios.get('http://www.omdbapi.com', {
+            params: {
+                apikey,
+                i: movieId,
+            },
+        });
+        selectedMovie.value = response.data;
+    } catch (error) {
+        console.error("Error fetching movie details:", error);
+    } finally {
+        isModalLoading.value = false;
+    }
+};
+  
 const closeModal = () => {
-  selectedMovie.value = null;
+    selectedMovie.value = null;
 };
-  </script>
-  
-  <style scoped>
 
-  </style>
+// Attach and detach scroll event listener
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
+</script>
   
+<style scoped>
+/* You can add any scoped styles here */
+</style>
