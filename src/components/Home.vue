@@ -67,7 +67,7 @@ const fetchMovies = async (searchQuery, currentPage = 1) => {
     noResults.value = false; 
 
     try {
-        const response = await axios.get('http://www.omdbapi.com', {
+        const response = await axios.get('https://www.omdbapi.com', {
             params: {
                 apikey,
                 s: searchQuery,
@@ -123,7 +123,7 @@ const handleScroll = () => {
 const onMovieSelect = async (movieId) => {
     isModalLoading.value = true;
     try {
-        const response = await axios.get('http://www.omdbapi.com', {
+        const response = await axios.get('https://www.omdbapi.com', {
             params: {
                 apikey,
                 i: movieId,
