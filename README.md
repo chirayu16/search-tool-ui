@@ -32,21 +32,24 @@ You can view the live app here: [Movie Search Application ](https://search-tool-
     npm run build
     
 ## Functionalities
-- Search Bar
-    Debounced input field to reduce the frequency of API calls.
-    Triggers a new movie search whenever a query is entered.
-    Infinite Scrolling
 
-- Monitors scroll position using an event listener.
-    Loads more movies automatically when the user nears the bottom of the page.
-    Movie Modal
+### Search Bar
+- **Debounced Input Field**: Reduces the frequency of API calls.
+- **Dynamic Search**: Triggers a new movie search whenever a query is entered.
 
-- Fetches detailed information about a movie by its IMDb ID when clicked.
-  Displays movie data in a modal overlay.
-  Skeleton and Spinner Loaders
-  
-- Theme Toggle
-  Dynamically switches between light and dark themes.
+### Infinite Scrolling
+- **Scroll Position Monitoring**: Uses an event listener to track the user's scroll position.
+- **Automatic Loading**: Loads more movies automatically when the user nears the bottom of the page.
+
+### Movie Modal
+- **Detailed Movie Information**: Fetches detailed information about a movie by its IMDb ID when clicked.
+- **Modal Overlay Display**: Displays movie data in a modal overlay.
+
+### Skeleton and Spinner Loaders
+- Provides visual feedback during data loading processes.
+
+### Theme Toggle
+- **Dynamic Theme Switching**: Allows users to switch between light and dark themes.
   
 ## API Key and OMDb Integration
   - Obtain an API key from OMDb API.
