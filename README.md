@@ -26,7 +26,7 @@ You can view the live app here: [Movie Search Application ](https://search-tool-
 4. Run the development server:
    ```bash
     npm run dev
-  The application will be accessible at http://localhost:5173.
+    The application will be accessible at http://localhost:5173.
 5.  Build for Production
     ```bash
     npm run build
