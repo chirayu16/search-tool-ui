@@ -1,51 +1,68 @@
 # Movie Search Application
 
-A Vue.js-based movie search application that uses the OMDb API to fetch and display movie details. The app includes features like a search bar, infinite scrolling for loading more results, theme toggle (light/dark mode), and a modal for detailed movie information.
+This Angular project allows users to search for GitHub profiles by username and view their details, including repositories.
+
+## Demo
+You can view the live app here: [Movie Search Application ](https://search-tool-ui.netlify.app/)
+
 
 ## Features
-Search Functionality
+- Search for movies by their titles using the search bar.
+- View movie information as search result
+- Displays detailed information about a selected movie in a modal window.
 
-Search for movies by their titles using the search bar.
-Utilizes debounce for optimizing API calls during user input.
-Theme Toggle
+## Technologies
+- **Angular**: Frontend framework
+- **GitHub API**: Fetch user data
 
-Switch between light and dark modes for better user experience.
-Infinite Scrolling
+## Setup and Usage
 
-Automatically loads more movies as the user scrolls down the page.
-Stops loading when no more results are available.
-Movie Details Modal
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/chirayu16/search-tool-ui.git
+   cd search-tool-ui
+2. Install dependencies:
+   ```bash
+   npm install
+3. Set Up Environment Variables
+   ```bash
+   VITE_API_KEY=your_api_key_here
+4. Run the development server:
+   ```bash
+    npm run dev
+  The application will be accessible at http://localhost:5173.
+5.  Build for Production
+    ```bash
+    npm run build
+    
+## Functionalities
+- Search Bar
+    Debounced input field to reduce the frequency of API calls.
+    Triggers a new movie search whenever a query is entered.
+    Infinite Scrolling
 
-Displays detailed information about a selected movie in a modal window.
-Responsive Design
+- Monitors scroll position using an event listener.
+    Loads more movies automatically when the user nears the bottom of the page.
+    Movie Modal
 
-Adapts seamlessly to various screen sizes.
-Fallback Poster
+- Fetches detailed information about a movie by its IMDb ID when clicked.
+  Displays movie data in a modal overlay.
+  Skeleton and Spinner Loaders
+  
+- Theme Toggle
+  Dynamically switches between light and dark themes.
+  
+## API Key and OMDb Integration
+  - Obtain an API key from OMDb API.
+  - Add the API key to the .env file under VITE_API_KEY.
+  - The app uses this key to fetch data from OMDb via Axios HTTP requests.
+  - 
+## Tech Stack
+    Frontend: Vue 3 + Vite
+    Styling: Tailwind CSS
+    API: OMDb API
+    Utility Library: Lodash (debounce)
+    HTTP Client: Axios
 
-Replaces missing movie posters with a default placeholder image.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+## License
+- This project is licensed under the MIT License.
