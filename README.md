@@ -55,7 +55,7 @@ You can view the live app here: [Movie Search Application ](https://search-tool-
   - Obtain an API key from OMDb API.
   - Add the API key to the .env file under VITE_API_KEY.
   - The app uses this key to fetch data from OMDb via Axios HTTP requests.
-  - 
+    
 ## Tech Stack
     Frontend: Vue 3 + Vite
     Styling: Tailwind CSS
