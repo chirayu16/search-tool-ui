@@ -12,17 +12,17 @@
       v-model="searchQuery"
       @input="emitSearch"
       placeholder="Search..."
-      class="w-full p-4 pl-10 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      class="w-full p-4 pl-10 text-sm border border-zinc-300 dark:border-zinc-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-800 focus:border-zinc-300 dark:focus:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 "
     />
   </div>
 </div>
 
 </template>
 <script setup>
-import { ref, defineEmits} from 'vue';
+import { ref, defineEmits } from 'vue';
 
 const searchQuery = ref("");
-const emit =  defineEmits(['search']);
+const emit = defineEmits(['search']);
 
 const emitSearch = () => {
   if (searchQuery.value.trim()) {
@@ -31,5 +31,5 @@ const emitSearch = () => {
 };
 </script>
 <style lang="">
-    
+
 </style>

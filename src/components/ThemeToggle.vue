@@ -41,15 +41,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <button 
-    class="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors duration-300"
-    @click="toggleTheme"
-    :aria-label="theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-  >
-    <svg v-if="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#18181b" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+  <button
+    class="flex items-center justify-center w-10 h-10 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors duration-300"
+    @click="toggleTheme" :aria-label="theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+    <svg v-if="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+      fill="#18181b" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
       <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
     </svg>
-    <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 stroke-gray-700">
+    <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="w-6 h-6 stroke-gray-700">
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2" />
       <path d="M12 20v2" />
