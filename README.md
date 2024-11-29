@@ -1,6 +1,6 @@
 # Movie Search Application
 
-This Angular project allows users to search for GitHub profiles by username and view their details, including repositories.
+A Vue.js-based movie search application that uses the OMDb API to fetch and display movie details.
 
 ## Demo
 You can view the live app here: [Movie Search Application ](https://search-tool-ui.netlify.app/)
