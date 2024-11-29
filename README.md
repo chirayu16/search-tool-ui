@@ -11,10 +11,6 @@ You can view the live app here: [Movie Search Application ](https://search-tool-
 - View movie information as search result
 - Displays detailed information about a selected movie in a modal window.
 
-## Technologies
-- **Angular**: Frontend framework
-- **GitHub API**: Fetch user data
-
 ## Setup and Usage
 
 1. Clone the repository:
