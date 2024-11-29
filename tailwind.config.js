@@ -10,9 +10,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      colors: {
-        "page-bg": "#0f172a",
-      }
+      fontFamily: {
+         sans: ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],

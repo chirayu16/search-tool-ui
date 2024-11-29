@@ -9,23 +9,21 @@
 </div>
 </template>
 <script setup>
-import SearchItem from './SearchItem.vue'; 
-import { defineProps, defineEmits } from "vue"; 
+import SearchItem from './SearchItem.vue';
+import { defineProps, defineEmits } from "vue";
 import { ref } from 'vue';
 
 const props = defineProps({
-  movies: {
-    type: Array,
-    required: true,
-  },
+    movies: {
+        type: Array,
+        required: true,
+    },
 });
 
 const emit = defineEmits(['selectMovie']);
 
 const selectMovie = (movieId) => {
-  emit('selectMovie', movieId);
+    emit('selectMovie', movieId);
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
