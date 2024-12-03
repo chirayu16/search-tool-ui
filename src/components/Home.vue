@@ -129,6 +129,8 @@ const onMovieSelect = async (movieId) => {
             },
         });
         selectedMovie.value = response.data;
+        if ( selectedMovie.value.Poster == 'N/A') selectedMovie.value.Poster = dummyPoster;
+
     } catch (error) {
         console.error("Error fetching movie details:", error);
     } finally {
